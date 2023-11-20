@@ -1,4 +1,5 @@
 import Anecdotes from "./anecdotes";
+import HighestVote from "./highestvote";
 
 const App = () => {
   return (

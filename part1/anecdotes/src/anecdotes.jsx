@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./button";
 import Votes from "./votes";
+import HighestVote from "./highestvote";
 const Anecdotes = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -14,6 +15,10 @@ const Anecdotes = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [voteCount, setVoteCount] = useState(
+    new Array(anecdotes.length).fill(0)
+  );
+
   const handleAnecdote = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length));
   };
@@ -21,8 +26,13 @@ const Anecdotes = () => {
   return (
     <>
       {anecdotes[selected]}
-      <Votes currentAnecdote={selected} givenAnecdote={anecdotes} />
+      <Votes
+        currentAnecdote={selected}
+        voteCount={voteCount}
+        setVoteCount={setVoteCount}
+      />
       <Button onClick={handleAnecdote} />
+      <HighestVote voteCount={voteCount} anecdotes={anecdotes} />
     </>
   );
 };

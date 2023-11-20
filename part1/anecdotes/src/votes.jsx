@@ -1,11 +1,6 @@
 import { useState } from "react";
 
-const Votes = ({ currentAnecdote, givenAnecdote }) => {
-  console.log(givenAnecdote);
-  const [voteCount, setVoteCount] = useState(
-    new Array(givenAnecdote.length).fill(0)
-  );
-
+const Votes = ({ currentAnecdote, voteCount, setVoteCount }) => {
   const handleVoteCount = () => {
     const copy = [...voteCount];
     copy[currentAnecdote] += 1;
