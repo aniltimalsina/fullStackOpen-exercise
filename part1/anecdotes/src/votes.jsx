@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Votes = ({ currentAnecdote, voteCount, setVoteCount }) => {
   const handleVoteCount = () => {
     const copy = [...voteCount];

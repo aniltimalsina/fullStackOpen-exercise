@@ -25,6 +25,7 @@ const Anecdotes = () => {
 
   return (
     <>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <Votes
         currentAnecdote={selected}
