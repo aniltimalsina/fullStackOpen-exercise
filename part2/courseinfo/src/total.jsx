@@ -1,12 +1,12 @@
-const Total = (props) => {
+const Total = ({ parts }) => {
   return (
     <div>
       <p>
         <strong>
           total of{" "}
-          {props.parts[0].exercises +
-            props.parts[1].exercises +
-            props.parts[2].exercises}{" "}
+          {parts.reduce((currentExercise, part) => {
+            return currentExercise + part.exercises;
+          }, 0)}{" "}
           exercises
         </strong>
       </p>
