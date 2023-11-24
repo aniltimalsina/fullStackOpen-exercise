@@ -1,4 +1,7 @@
 import { useState } from "react";
+import FilterName from "./filterName";
+import PersonForm from "./personform";
+import Persons from "./persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,11 +17,9 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(persons);
     let findPerson = persons.find((person) => {
       return person.name === newName;
     });
-    console.log(findPerson);
     findPerson === undefined
       ? setPersons(persons.concat({ name: newName, number: newNumber }))
       : window.alert(`${newName} is already added to phonebook`);
@@ -49,37 +50,19 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>
-        filter shown with <input onChange={handleFilter} />
-      </p>
+      <FilterName handleFilter={handleFilter} />
       <h2>add a new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input onChange={handleName} />
-        </div>
-        <div>
-          number: <input onChange={handleNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {showAll
-        ? persons.map((person) => {
-            return (
-              <div key={person.id}>
-                {person.name} {person.number}
-              </div>
-            );
-          })
-        : filteredPersons.map((person) => {
-            return (
-              <div key={person.id}>
-                {person.name} {person.number}
-              </div>
-            );
-          })}
+      <PersonForm
+        handleName={handleName}
+        handleNumber={handleNumber}
+        handleSubmit={handleSubmit}
+      />
+      <h3>Numbers</h3>
+      <Persons
+        filteredPersons={filteredPersons}
+        persons={persons}
+        showAll={showAll}
+      />
     </div>
   );
 };
