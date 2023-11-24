@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FilterName from "./filterName";
 import PersonForm from "./personform";
 import Persons from "./persons";
-import axios from "axios";
+import pService from "./services/perservice";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,9 +12,7 @@ const App = () => {
   const [showAll, setShowAll] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/persons").then((res) => {
-      setPersons(res.data);
-    });
+    pService.getAll().then((response) => setPersons(response.data));
   }, []);
 
   const handleSubmit = (event) => {
@@ -23,8 +21,8 @@ const App = () => {
       return person.name === newName;
     });
     findPerson === undefined
-      ? axios
-          .post("http://localhost:3000/persons", {
+      ? pService
+          .create({
             name: newName,
             number: newNumber,
           })
