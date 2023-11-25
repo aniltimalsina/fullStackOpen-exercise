@@ -4,6 +4,7 @@ import PersonForm from "./personform";
 import Persons from "./persons";
 import pService from "./services/perservice";
 import axios from "axios";
+import Notification from "./notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [showAll, setShowAll] = useState(true);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     pService.getAll().then((response) => setPersons(response.data));
@@ -34,6 +36,7 @@ const App = () => {
                 person.id !== findPerson.id ? person : response.data
               )
             );
+            setNotification(`${newName}'s number has been changed `);
           });
       }
     };
@@ -49,6 +52,7 @@ const App = () => {
           })
           .then((res) => {
             setPersons(persons.concat(res.data));
+            setNotification(`${newName} has been added`); //notification alert
           })
       : handleEditNumber(); //Only if the entered name is matching with already exist name
 
@@ -79,6 +83,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification
+        notification={notification}
+        setNotification={setNotification}
+      />
       <FilterName handleFilter={handleFilter} />
       <h2>add a new</h2>
       <PersonForm
