@@ -3,6 +3,7 @@ import FilterName from "./filterName";
 import PersonForm from "./personform";
 import Persons from "./persons";
 import pService from "./services/perservice";
+import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -16,6 +17,26 @@ const App = () => {
   }, []);
 
   const handleSubmit = (event) => {
+    const handleEditNumber = () => {
+      const confirmation = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one?`
+      );
+      if (confirmation) {
+        axios
+          .put(`http://localhost:3000/persons/${findPerson.id}`, {
+            name: newName,
+            number: newNumber,
+          })
+          .then((response) => {
+            //update the state
+            setPersons(
+              persons.map((person) =>
+                person.id !== findPerson.id ? person : response.data
+              )
+            );
+          });
+      }
+    };
     event.preventDefault();
     let findPerson = persons.find((person) => {
       return person.name === newName;
@@ -29,7 +50,8 @@ const App = () => {
           .then((res) => {
             setPersons(persons.concat(res.data));
           })
-      : window.alert(`${newName} is already added to phonebook`);
+      : handleEditNumber(); //Only if the entered name is matching with already exist name
+
     event.target.reset();
     setNewName("");
   };
