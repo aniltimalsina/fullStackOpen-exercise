@@ -69,6 +69,7 @@ const App = () => {
         filteredPersons={filteredPersons}
         persons={persons}
         showAll={showAll}
+        setPersons={setPersons}
       />
     </div>
   );
